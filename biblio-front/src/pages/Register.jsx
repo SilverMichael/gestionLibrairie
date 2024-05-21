@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { CustomButton, CustomInput } from "../components/index";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
 const Register = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     userId: "",
     email: "",
@@ -40,7 +41,6 @@ const Register = () => {
       });
 
       try {
-        
         const registerRequest = axios
           .post(`${import.meta.env.VITE_API_USER}/register`, user)
           .then((res) => {
@@ -50,6 +50,7 @@ const Register = () => {
               errorMail: res.data.error,
             });
           });
+          navigate("/login")
       } catch (error) {
         console.error("error at register:", error);
       }
