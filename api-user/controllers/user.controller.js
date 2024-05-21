@@ -35,7 +35,6 @@ const register = async (req, res) => {
           created_at: dateCreatation,
         },
       });
-      console.log(user);
 
       res.status(200).json({ message: "user added successfuly", data: user });
     }
