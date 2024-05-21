@@ -12,9 +12,10 @@ const register = async (req, res) => {
 
   var salt = bcrypt.genSaltSync(10);
   var passwordHash = bcrypt.hashSync(password, salt);
+  const dateCreatation = new Date();
 
   try {
-    const userExist = prisma.user.findFirst({
+    const userExist = await prisma.user.findFirst({
       where: {
         email,
       },
@@ -26,13 +27,15 @@ const register = async (req, res) => {
         data: {
           userId,
           email,
-          age,
+          age: parseInt(age),
           firstName,
           lastName,
           pseudo,
           password: passwordHash,
+          created_at: dateCreatation,
         },
       });
+      console.log(user);
 
       res.status(200).json({ message: "user added successfuly", data: user });
     }
@@ -67,19 +70,19 @@ const signIn = async (req, res) => {
       { expiresIn: maxAge }
     );
     res.cookie("user_token", token, { httpOnly: true, maxAge });
-    res.status(200).json({user: userData})
+    res.status(200).json({ user: userData });
   } catch (err) {
     console.error("error at signin: ", err);
-    res.status(500).json({error: "Internal server error"})
+    res.status(500).json({ error: "Internal server error" });
   }
 };
-const signOut = async(req, res) => {
-    res.cookie("user_token", "", {maxAge: 1})
-    res.redirect("/")
-}
+const signOut = async (req, res) => {
+  res.cookie("user_token", "", { maxAge: 1 });
+  res.redirect("/");
+};
 
 module.exports = {
   register,
   signIn,
-  signOut
+  signOut,
 };
