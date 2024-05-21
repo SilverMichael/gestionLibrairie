@@ -18,3 +18,27 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.landing {
+  @apply flex xl:flex-row flex-col-reverse gap-5 relative z-0 max-w-[1440px] mx-auto;
+}
+
+.landing__title {
+  @apply 2xl:text-[72px] sm:text-[64px] text-[50px] font-extrabold;
+}
+
+.landing__subtitle {
+  @apply text-[27px] text-black-100 font-light mt-5;
+}
+
+.landing__image-container {
+  @apply xl:flex-[1.5] flex justify-center items-center w-full xl:h-screen;
+}
+
+.landing__image {
+  @apply relative xl:w-full bg-landing xl:rounded-full bg-cover bg-center w-[100%] xl:h-4/5 border  xl:shadow-xl xl:shadow-slate-500 xl:drop-shadow-2xl h-[300px] z-0;
+}
+
+.landing__image-overlay {
+  @apply absolute xl:-top-24 xl:-right-1/2 -right-1/4  bg-repeat-round -z-10 w-full xl:h-screen h-[590px] overflow-hidden;
+}
