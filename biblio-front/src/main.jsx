@@ -5,6 +5,7 @@ import "./index.css";
 import Register from "./pages/Register.jsx";
 import Login from "./pages/Login.jsx";
 import Dashboard from "./pages/librairy/Dashboard.jsx";
+import DasboardAdmin from "./pages/Admin/DasboardAdmin.jsx";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
   {
     path: "/librairy/dashboard",
     element: <Dashboard />,
+  },
+  {
+    path: "/admin/dashboard",
+    element: <DasboardAdmin />,
   },
 ]);
 
