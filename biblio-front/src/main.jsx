@@ -4,9 +4,9 @@ import App from "./App.jsx";
 import "./index.css";
 import Register from "./pages/Register.jsx";
 import Login from "./pages/Login.jsx";
+import Dashboard from "./pages/librairy/Dashboard.jsx";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
 
 const router = createBrowserRouter([
   {
@@ -15,16 +15,21 @@ const router = createBrowserRouter([
   },
   {
     path: "/register",
-    element: <Register />
+    element: <Register />,
   },
   {
     path: "/login",
-    element: <Login />
-  }
+    element: <Login />,
+  },
+
+  {
+    path: "/librairy/dashboard",
+    element: <Dashboard />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-      <RouterProvider router={router} />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
