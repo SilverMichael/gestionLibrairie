@@ -3,6 +3,7 @@ import axios from "axios";
 
 import { CustomButton, CustomInput } from "../components/index";
 import { Link, useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 import Cookies from "js-cookie";
 
@@ -24,11 +25,17 @@ const Login = () => {
           if (res.data?.error) {
             setErrorInput(res.data.error);
           } else {
+            const usertype = jwtDecode(res.data.token).type;
+
             Cookies.set("user_token", res.data.token, {
               expires: 3,
               secure: true,
             });
-            navigate("/librairy/dashboard");
+            if (usertype === "client") {
+              navigate("/librairy/dashboard");
+            } else {
+              navigate("/admin/dashboard");
+            }
           }
         });
     } catch (error) {
