@@ -17,6 +17,7 @@ const getAllBooks = async (req, res) => {
 };
 
 const addBook = async (req, res) => {
+  console.log(req.body);
   const {
     bookId,
     title,
@@ -28,6 +29,7 @@ const addBook = async (req, res) => {
     rentalPrice,
     available,
     count,
+    coverImage,
     releaseDate,
   } = req.body;
   const dateCreatation = new Date();
@@ -44,7 +46,8 @@ const addBook = async (req, res) => {
         rentalPrice,
         available,
         count,
-        releaseDate,
+        coverImage,
+        releaseDate: new Date(releaseDate),
         created_at: dateCreatation,
       },
     });
@@ -92,7 +95,7 @@ const getBookByAuthorAndType = async (req, res) => {
     const book = await prisma.book.findMany({
       where: {
         author,
-        type
+        type,
       },
     });
     res.status(200).json({ data: book });
@@ -102,12 +105,22 @@ const getBookByAuthorAndType = async (req, res) => {
   }
 };
 
-
+const uploadCover = (req, res) => {
+  console.log(req.file)
+  if (!req.file) {
+    return res.status(400).send("No file uploaded.");
+  }
+  res.status(200).send({
+    message: "File uploaded successfully",
+    filename: req.file.filename,
+  });
+};
 
 module.exports = {
   getAllBooks,
   addBook,
   getBookByGenre,
   getBookByAuthor,
-  getBookByAuthorAndType
+  getBookByAuthorAndType,
+  uploadCover,
 };
