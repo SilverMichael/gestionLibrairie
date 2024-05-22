@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import CustomButton from "./CustomButtons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const NavBar = () => {
+  const navigate = useNavigate();
   const [isConnected, setIsConnected] = useState(false);
   const token = Cookies.get("user_token");
 
@@ -14,6 +15,12 @@ const NavBar = () => {
       setIsConnected(false);
     }
   }, []);
+
+  const logout =(e) => {
+    e.preventDefault()
+    Cookies.remove('user_token');
+    navigate("/");
+  }
 
   return (
     <header className="w-full shadow-md border-white border-b z-10">
@@ -35,6 +42,7 @@ const NavBar = () => {
               title="Se déconnecter"
               btnType="button"
               containerStyle="border mx-1 border-emerald-800 text-emerald-800 rounded-full min-w-[130px] bg-white"
+              handleClick={logout}
             />
           </Link>
         ) : (
