@@ -21,6 +21,7 @@ model book {
   releaseDate DateTime? @db.Timestamp(0)
   created_at  DateTime? @db.Timestamp(0)
   modified_at DateTime? @db.Timestamp(0)
+  coverImage  String    @db.VarChar(100)
   buy         buy[]
   rent        rent[]
 }
@@ -52,7 +53,6 @@ model rent {
 model user {
   userId      String    @id @unique(map: "userId") @db.VarChar(100)
   email       String    @unique(map: "email") @db.VarChar(50)
-  coverImage  String    @db.VarChar(100)
   firstName   String?   @db.VarChar(50)
   lastName    String?   @db.VarChar(50)
   age         Int?
@@ -62,6 +62,7 @@ model user {
   regular     Boolean?  @default(false)
   created_at  DateTime? @db.Timestamp(0)
   modified_at DateTime? @db.Timestamp(0)
+  type        String?   @db.VarChar(10)
   buy         buy[]
   rent        rent[]
 }

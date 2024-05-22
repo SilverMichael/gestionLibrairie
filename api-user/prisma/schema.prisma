@@ -12,6 +12,7 @@ model book {
   title       String?   @db.VarChar(50)
   resume      String?   @db.VarChar(500)
   type        String?   @db.VarChar(100)
+  coverImage  String    @db.VarChar(100)
   edition     String?   @db.VarChar(50)
   author      String?   @db.VarChar(50)
   salePrice   Float?    @db.Float
@@ -52,12 +53,12 @@ model rent {
 model user {
   userId      String    @id @unique(map: "userId") @db.VarChar(100)
   email       String    @unique(map: "email") @db.VarChar(50)
-  coverImage  String    @db.VarChar(100)
   firstName   String?   @db.VarChar(50)
   lastName    String?   @db.VarChar(50)
   age         Int?
   password    String?   @db.VarChar(100)
   pseudo      String?   @db.VarChar(50)
+  type        String?   @db.VarChar(10)
   photo       String?   @db.VarChar(100)
   regular     Boolean?  @default(false)
   created_at  DateTime? @db.Timestamp(0)
