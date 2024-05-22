@@ -180,7 +180,7 @@ const Register = () => {
             />
 
             <CustomButton
-              title="Regiter"
+              title="Register"
               btnType="submit"
               containerStyle="bg-green-600 hover:bg-green-500 text-white mt-5 w-full rounded-md"
               // handleClick={handleSubmit}
