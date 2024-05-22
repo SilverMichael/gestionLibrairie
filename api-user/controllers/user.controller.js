@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 const maxAge = 1000 * 60 * 60 * 24 * 3;
 
 const register = async (req, res) => {
-  const { userId, email, firstName, lastName, pseudo, age, password } =
+  const { userId, email, firstName, lastName, type, pseudo, age, password } =
     req.body;
 
   var salt = bcrypt.genSaltSync(10);
@@ -30,6 +30,7 @@ const register = async (req, res) => {
           age: parseInt(age),
           firstName,
           lastName,
+          type,
           pseudo,
           password: passwordHash,
           created_at: dateCreatation,
@@ -64,6 +65,7 @@ const signIn = async (req, res) => {
         userId: userData.userId,
         lastName: userData.lastName,
         firstName: userData.firstName,
+        type: userData.type
       },
       process.env.TOKEN_SECRET,
       { expiresIn: maxAge }
