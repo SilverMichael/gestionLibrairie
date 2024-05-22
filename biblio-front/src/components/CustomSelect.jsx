@@ -43,8 +43,8 @@ const CustomSelect = ({
         className={`flex w-full  items-center px-4 text-sm text-heading transition duration-300 ease-in-out focus:outline-0 focus:ring-0 ${variantClasses[variant]}  ${sizeClasses[dimension]} ${selectStyle} `}
         {...rest}
       >
-        {definition && <option value="">{definition}</option>}
-        {value.map((val) => (
+        {definition && <option disabled value="">{definition}</option>}
+        {value?.map((val) => (
           <option key={val} value={val}>
             {val}
           </option>
