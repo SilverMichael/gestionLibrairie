@@ -5,26 +5,72 @@ import {
   CustomSelect,
   CustomTextArea,
 } from "../index";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
 const AddBookForm = ({ setShowAddForm }) => {
   const [bookData, setBookData] = useState({
     bookId: "",
     title: "",
-    author: "",
     resume: "",
-    type: "",
-    coverImage: "",
+    type: "sci-fi",
     edition: "",
+    author: "",
     salePrice: 0,
     rentalPrice: 0,
+    available: true,
     count: 0,
     releaseDate: "",
-    available: true,
+    coverImage: null,
+    cover: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleImageUpload = async (imageFile) => {
+    const formData = new FormData();
+    formData.append("image", imageFile);
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_UPLOAD}/upload`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      return response.data.filename;
+    } catch (error) {
+      console.error("Error uploading image: ", error);
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    let coverImageUrl = "";
+    if (bookData.coverImage) {
+      try {
+        coverImageUrl = await handleImageUpload(bookData.coverImage);
+      } catch (error) {
+        console.error("Error at uploading image: ", error);
+        return;
+      }
+    }
+
+    const newBook = {
+      ...bookData,
+      bookId: uuidv4(),
+      coverImage: coverImageUrl,
+    };
+    console.log(newBook);
+    try {
+      const bookRequest = await axios
+        .post(`${import.meta.env.VITE_API_BOOK}/add`, newBook)
+        .then((res) => {
+          console.log(res.data);
+        });
+    } catch (error) {
+      console.error("error at adding new book: ", error);
+    }
 
     setShowAddForm(false);
   };
@@ -32,7 +78,8 @@ const AddBookForm = ({ setShowAddForm }) => {
   const handleChange = (e) => {
     setBookData({
       ...bookData,
-      coverImage: URL.createObjectURL(e.target.files[0]),
+      cover: URL.createObjectURL(e.target.files[0]),
+      coverImage: e.target.files[0],
     });
   };
   return (
@@ -115,7 +162,7 @@ const AddBookForm = ({ setShowAddForm }) => {
               variant="normal"
               dimension="medium"
               definition="Genre(s)"
-              value={[
+              data={[
                 "sci-fi",
                 "Comic",
                 "Adventure",
@@ -123,10 +170,11 @@ const AddBookForm = ({ setShowAddForm }) => {
                 "Drame",
                 "Historic",
               ]}
-              onChange={(e) => {
+              onValueChange={(selectedValue) => {
+                console.log(selectedValue);
                 setBookData({
                   ...bookData,
-                  type: e.target.value,
+                  type: selectedValue,
                 });
               }}
             />
@@ -145,9 +193,9 @@ const AddBookForm = ({ setShowAddForm }) => {
                 "*:m-2 max-[425px]:flex-col border my-2 rounded-lg justify-center items-center flex flex-col"
               }
             >
-              {bookData?.coverImage && (
+              {bookData?.cover && (
                 <img
-                  src={bookData?.coverImage}
+                  src={bookData?.cover}
                   className="h-[50vh] rounded-md my-3 w-fit"
                 />
               )}
@@ -173,6 +221,7 @@ const AddBookForm = ({ setShowAddForm }) => {
                       setBookData({
                         ...bookData,
                         coverImage: "",
+                        cover: "",
                       })
                     }
                   >
