@@ -23,12 +23,12 @@ const Register = () => {
     errorPassword: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setUser({
-      ...user,
-      userId: uuidv4(),
-    });
+    const newUser = {
+      ...user, 
+      userId: uuidv4()
+    }
     if (user.password !== user.confirmedPassword) {
       setErrorInput({
         ...errorInput,
@@ -41,8 +41,8 @@ const Register = () => {
       });
 
       try {
-        const registerRequest = axios
-          .post(`${import.meta.env.VITE_API_USER}/register`, user)
+        const registerRequest = await axios
+          .post(`${import.meta.env.VITE_API_USER}/register`, newUser)
           .then((res) => {
             console.log(res.data.error);
             setErrorInput({
