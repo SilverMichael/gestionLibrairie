@@ -45,7 +45,6 @@ const register = async (req, res) => {
 };
 
 const signIn = async (req, res) => {
-  console.log(req.body)
   const { email, password } = req.body;
   try {
     const userData = await prisma.user.findFirst({
