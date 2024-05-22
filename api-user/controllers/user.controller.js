@@ -45,19 +45,20 @@ const register = async (req, res) => {
 };
 
 const signIn = async (req, res) => {
+  console.log(req.body)
   const { email, password } = req.body;
   try {
     const userData = await prisma.user.findFirst({
       where: {
-        email,
+        email, 
       },
     });
     if (!userData) {
-      return res.status(201).json({ error: "user not found" });
+      return res.status(201).json({ error: "Email or password incorrect" });
     }
     const validPassword = bcrypt.compareSync(password, userData.password);
     if (!validPassword) {
-      return res.status(201).json({ error: "Incorrect password" });
+      return res.status(201).json({ error: "Email or password incorrect" });
     }
     const token = jwt.sign(
       {
@@ -69,7 +70,7 @@ const signIn = async (req, res) => {
       { expiresIn: maxAge }
     );
     res.cookie("user_token", token, { httpOnly: true, maxAge });
-    res.status(200).json({ user: userData });
+    res.status(200).json({ user: userData, token: token });
   } catch (err) {
     console.error("error at signin: ", err);
     res.status(500).json({ error: "Internal server error" });
