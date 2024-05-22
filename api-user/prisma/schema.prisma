@@ -11,7 +11,6 @@ model book {
   bookId      String    @id @unique(map: "bookId") @db.VarChar(100)
   title       String?   @db.VarChar(50)
   resume      String?   @db.VarChar(500)
-  releaseDate DateTime? @db.Timestamp(0)
   type        String?   @db.VarChar(100)
   edition     String?   @db.VarChar(50)
   author      String?   @db.VarChar(50)
@@ -19,6 +18,7 @@ model book {
   rentalPrice Float?    @db.Float
   available   Boolean?  @default(true)
   count       Int?
+  releaseDate DateTime? @db.Timestamp(0)
   created_at  DateTime? @db.Timestamp(0)
   modified_at DateTime? @db.Timestamp(0)
   buy         buy[]
@@ -52,6 +52,7 @@ model rent {
 model user {
   userId      String    @id @unique(map: "userId") @db.VarChar(100)
   email       String    @unique(map: "email") @db.VarChar(50)
+  coverImage  String    @db.VarChar(100)
   firstName   String?   @db.VarChar(50)
   lastName    String?   @db.VarChar(50)
   age         Int?

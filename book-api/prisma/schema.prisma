@@ -52,6 +52,7 @@ model rent {
 model user {
   userId      String    @id @unique(map: "userId") @db.VarChar(100)
   email       String    @unique(map: "email") @db.VarChar(50)
+  coverImage  String    @db.VarChar(100)
   firstName   String?   @db.VarChar(50)
   lastName    String?   @db.VarChar(50)
   age         Int?
