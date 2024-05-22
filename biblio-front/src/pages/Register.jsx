@@ -14,7 +14,7 @@ const Register = () => {
     age: 0,
     password: "",
     confirmedPassword: "",
-    type: "",
+    type: "client",
     pseudo: "",
   });
 

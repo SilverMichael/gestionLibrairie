@@ -1,15 +1,39 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 import { CustomButton, CustomInput } from "../components/index";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+import Cookies from "js-cookie";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
   const [errorInput, setErrorInput] = useState("");
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    try {
+      setErrorInput("");
+      const loginRequest = await axios
+        .post(`${import.meta.env.VITE_API_USER}/signin`, user)
+        .then((res) => {
+          if (res.data?.error) {
+            setErrorInput(res.data.error);
+          } else {
+            Cookies.set("user_token", res.data.token, {
+              expires: 3,
+              secure: true,
+            });
+            navigate("/librairy/dashboard");
+          }
+        });
+    } catch (error) {
+      console.error("error during login: ", error);
+    }
   };
   return (
     <div className="flex flex-row-reverse w-full h-screen">
@@ -24,8 +48,14 @@ const Login = () => {
               variant="normal"
               dimension="medium"
               placeholder="your@mail.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={user.email}
+              error={errorInput}
+              onChange={(e) =>
+                setUser({
+                  ...user,
+                  email: e.target.value,
+                })
+              }
               required
             />
             <CustomInput
@@ -34,9 +64,14 @@ const Login = () => {
               type="password"
               containerStyle="mt-5"
               placeholder=""
-              value={password}
-              error={errorInput?.errorPassword}
-              onChange={(e) => setPassword(e.target.value)}
+              value={user.password}
+              error={errorInput}
+              onChange={(e) =>
+                setUser({
+                  ...user,
+                  password: e.target.value,
+                })
+              }
               required
             />
             {/* <Link href="" className="mt-3 text-start text-sm text-blue-700 active:text-violet-800">
