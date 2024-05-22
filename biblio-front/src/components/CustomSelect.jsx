@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 const variantClasses = {
   normal:
@@ -23,10 +23,20 @@ const CustomSelect = ({
   selectStyle,
   dimension = "medium",
   variant = "normal",
+  data,
   value,
+  onValueChange,
   definition,
   ...rest
 }) => {
+  const [selectValue, setSelectValue] = useState(value);
+
+  const handleValueChange = (selectedValue) => {
+    if (onValueChange) {
+      onValueChange(selectedValue);
+    }
+  };
+
   return (
     <div className={containerStyle}>
       {label && (
@@ -38,13 +48,22 @@ const CustomSelect = ({
         </label>
       )}
       <select
+        value={selectValue}
         name={name}
         id={name}
         className={`flex w-full  items-center px-4 text-sm text-heading transition duration-300 ease-in-out focus:outline-0 focus:ring-0 ${variantClasses[variant]}  ${sizeClasses[dimension]} ${selectStyle} `}
+        onChange={(e) => {
+          setSelectValue(e.target.value);
+          handleValueChange(e.target.value);
+        }}
         {...rest}
       >
-        {definition && <option disabled value="">{definition}</option>}
-        {value?.map((val) => (
+        {definition && (
+          <option disabled value="">
+            {definition}
+          </option>
+        )}
+        {data?.map((val) => (
           <option key={val} value={val}>
             {val}
           </option>
