@@ -8,7 +8,11 @@ import {
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
-const AddBookForm = ({ setShowAddForm }) => {
+const AddBookForm = ({
+  setShowAddForm,
+  setIsFormSubmitted,
+  isFormSubmitted,
+}) => {
   const [bookData, setBookData] = useState({
     bookId: "",
     title: "",
@@ -68,6 +72,7 @@ const AddBookForm = ({ setShowAddForm }) => {
         .then((res) => {
           console.log(res.data);
         });
+        setIsFormSubmitted(!isFormSubmitted)
     } catch (error) {
       console.error("error at adding new book: ", error);
     }

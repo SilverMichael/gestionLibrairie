@@ -9,7 +9,7 @@ import {
 import axios from "axios";
 import livre1 from "../../assets/livre1.jpg";
 
-const BookList = () => {
+const BookList = ({isFormSubmitted}) => {
   const [bookData, setBookData] = useState([]);
   const [bookDetail, setBookDetail] = useState({
     bookId: "",
@@ -42,7 +42,7 @@ const BookList = () => {
   };
   useEffect(() => {
     getDataBook();
-  }, []);
+  }, [isFormSubmitted]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
