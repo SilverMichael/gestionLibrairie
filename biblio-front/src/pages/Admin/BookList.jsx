@@ -75,7 +75,7 @@ const BookList = () => {
             >
               <li className="book">
                 <img
-                  src={`${import.meta.env.VITE_API_GATEWAY}/${book?.coverImage}`}
+                  src={`http://localhost:5001/uploads/${book?.coverImage}`}
                   alt="livre1"
                 />
               </li>
@@ -120,7 +120,7 @@ const BookList = () => {
                       {/* <ul className=""> */}
                       <li className="book ">
                         <img
-                          src={`${import.meta.env.VITE_API_GATEWAY}/${
+                          src={`http://localhost:5001/uploads/${
                             bookDetail?.coverImage
                           }`}
                           alt="livre1"
