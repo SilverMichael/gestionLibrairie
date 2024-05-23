@@ -7,22 +7,29 @@ app.get("/", (req, res) => {
   res.send("HELLO TO MY GAATEWAY");
 });
 
+// app.use((req, res, next) => {
+//   console.log(`Incoming request: ${req.method} ${req.url}`);
+//   next();
+// });
+
 app.use(
   "/user",
   createProxyMiddleware({
-    target: "http://localhost:5000",
+    target: "http://localhost:5000/api/user",
     pathRewrite: {
-      "^/api/user": "",
+      "^/user": "",
     },
+    
   })
 );
+
 
 app.use(
   "/book",
   createProxyMiddleware({
-    target: "http://localhost:5001",
+    target: "http://localhost:5001/api/book",
     pathRewrite: {
-      "^/api/book": "",
+      "book": "",
     },
   })
 );
@@ -30,22 +37,22 @@ app.use(
 app.use(
   "/upload",
   createProxyMiddleware({
-    target: "http://localhost:5001",
+    target: "http://localhost:5001/api/upload",
     pathRewrite: {
-      "^/api/upload": "",
+      "^upload": "",
     },
   })
 );
 app.use(
   "/uploads",
   createProxyMiddleware({
-    target: "http://localhost:5001",
+    target: "http://localhost:5001/uploads",
     pathRewrite: {
-      "^/uploads": "",
+      "/uploads": "",
     },
   })
 );
 
-app.listen(PORT, ()=> {
-    console.log("API Gateway run on port ", PORT)
-})
+app.listen(PORT, () => {
+  console.log("API Gateway run on port ", PORT);
+});
