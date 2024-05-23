@@ -8,7 +8,7 @@ app.get("/", (req, res) => {
 });
 
 app.use(
-  "/api/user",
+  "/user",
   createProxyMiddleware({
     target: "http://localhost:5000",
     pathRewrite: {
@@ -18,11 +18,30 @@ app.use(
 );
 
 app.use(
-  "/api/book",
+  "/book",
   createProxyMiddleware({
     target: "http://localhost:5001",
     pathRewrite: {
       "^/api/book": "",
+    },
+  })
+);
+
+app.use(
+  "/upload",
+  createProxyMiddleware({
+    target: "http://localhost:5001",
+    pathRewrite: {
+      "^/api/upload": "",
+    },
+  })
+);
+app.use(
+  "/uploads",
+  createProxyMiddleware({
+    target: "http://localhost:5001",
+    pathRewrite: {
+      "^/uploads": "",
     },
   })
 );
