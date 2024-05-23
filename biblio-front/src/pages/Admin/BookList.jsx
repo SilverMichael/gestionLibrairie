@@ -32,7 +32,7 @@ const BookList = () => {
   const getDataBook = async () => {
     try {
       const response = await axios
-        .get(`${import.meta.env.VITE_API_BOOK}/`)
+        .get(`${import.meta.env.VITE_API_GATEWAY}/book/`)
         .then((res) => {
           setBookData(res?.data?.data);
         });
@@ -75,7 +75,7 @@ const BookList = () => {
             >
               <li className="book">
                 <img
-                  src={`${import.meta.env.VITE_LINK_COVER}/${book?.coverImage}`}
+                  src={`${import.meta.env.VITE_API_GATEWAY}/${book?.coverImage}`}
                   alt="livre1"
                 />
               </li>
@@ -120,7 +120,7 @@ const BookList = () => {
                       {/* <ul className=""> */}
                       <li className="book ">
                         <img
-                          src={`${import.meta.env.VITE_LINK_COVER}/${
+                          src={`${import.meta.env.VITE_API_GATEWAY}/${
                             bookDetail?.coverImage
                           }`}
                           alt="livre1"

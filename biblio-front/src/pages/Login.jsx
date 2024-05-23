@@ -20,7 +20,7 @@ const Login = () => {
     try {
       setErrorInput("");
       const loginRequest = await axios
-        .post(`${import.meta.env.VITE_API_USER}/signin`, user)
+        .post(`${import.meta.env.VITE_API_GATEWAY}/user/signin`, user)
         .then((res) => {
           if (res.data?.error) {
             setErrorInput(res.data.error);

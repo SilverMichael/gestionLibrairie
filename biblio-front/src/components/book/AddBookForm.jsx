@@ -30,7 +30,7 @@ const AddBookForm = ({ setShowAddForm }) => {
     formData.append("image", imageFile);
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_UPLOAD}/upload`,
+        `${import.meta.env.VITE_API_GATEWAY}/upload`,
         formData,
         {
           headers: {
@@ -64,7 +64,7 @@ const AddBookForm = ({ setShowAddForm }) => {
     console.log(newBook);
     try {
       const bookRequest = await axios
-        .post(`${import.meta.env.VITE_API_BOOK}/add`, newBook)
+        .post(`${import.meta.env.VITE_API_GATEWAY}/book/add`, newBook)
         .then((res) => {
           console.log(res.data);
         });

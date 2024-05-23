@@ -42,7 +42,7 @@ const Register = () => {
 
       try {
         const registerRequest = await axios
-          .post(`${import.meta.env.VITE_API_USER}/register`, newUser)
+          .post(`${import.meta.env.VITE_API_GATEWAY}/user/register`, newUser)
           .then((res) => {
             console.log(res.data.error);
             setErrorInput({
