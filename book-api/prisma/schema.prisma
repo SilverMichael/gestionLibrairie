@@ -10,9 +10,9 @@ datasource db {
 model book {
   bookId      String    @id @unique(map: "bookId") @db.VarChar(100)
   title       String?   @db.VarChar(50)
-  resume      String?   @db.VarChar(500)
+  resume      String?   @db.VarChar(1000)
   type        String?   @db.VarChar(100)
-  edition     String?   @db.VarChar(50)
+  edition     String?   @db.VarChar(100)
   author      String?   @db.VarChar(50)
   salePrice   Float?    @db.Float
   rentalPrice Float?    @db.Float
